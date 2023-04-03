@@ -19,6 +19,80 @@ header {
     background-color: #fff;
     padding: 20px 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header button {
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#addProjectContainer {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#addProjectForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#addProjectForm label {
+    margin-bottom: 5px;
+}
+
+#addProjectForm input {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#addProjectForm textarea {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+#addProjectForm button {
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#projectsContainer {
+    padding: 0 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+#projectsContainer .projectButton {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #tasksContainer {
@@ -28,12 +102,60 @@ header {
     grid-gap: 20px;
 }
 
-.taskCard {
+#tasksContainer .taskCard {
     background-color: #fff;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#tasksContainer .taskCard .taskCardTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#tasksContainer .taskCard .taskCardDescription {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#tasksContainer .taskCard .taskCardDueDate {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#tasksContainer .taskCard .taskCardPriority {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#tasksContainer .taskCard .taskCardActions {
+    margin: 20px 0;
+}
+
+#tasksContainer .taskCard .taskCardActions button {
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #editTaskModal {
@@ -47,12 +169,47 @@ header {
     z-index: 99;
 }
 
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    width: 600px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+#editTaskForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#editTaskForm label {
+    margin-bottom: 5px;
+}
+
+#editTaskForm input {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#editTaskForm textarea {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+#editTaskForm select {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#editTaskForm button {
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
     border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 #addTaskModal {
@@ -64,4 +221,47 @@ header {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 99;
+}
+
+#addTaskForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#addTaskForm label {
+    margin-bottom: 5px;
+}
+
+#addTaskForm input {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#addTaskForm textarea {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+#addTaskForm select {
+    border: 2px solid #000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#addTaskForm button {
+    border: none;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
 }
