@@ -2,20 +2,10 @@ const addTaskform = document.querySelector("#addTaskForm");
 const addTaskButton = document.querySelector("#addTaskButton");
 const addTaskModal = document.querySelector("#addTaskModal");
 const editTaskModal = document.querySelector("#editTaskModal");
-
-const taskTitle = document.querySelector("#addTaskTitle").value;
-const taskDescription = document.querySelector("#addTaskDescription").value;
-const taskDueDate = document.querySelector("#addTaskDueDate").value;
-const taskPriority = document.querySelector("#addTaskPriority").value;
-const taskProject = document.querySelector("#addTaskProject").value;
-const taskId = Math.floor(Math.random() * 100000000);
-
 const tasksContainer = document.querySelector("#tasksContainer");
 const taskCards = document.querySelectorAll(".taskCard");
-
 let deleteButtons = document.querySelectorAll(".taskCardDeleteButton");
 let editButtons = document.querySelectorAll(".taskCardEditButton");
-
 const projectsContainer = document.querySelector("#projectsContainer");
 const projectButtons = document.querySelectorAll(".projectButton");
 
@@ -26,6 +16,12 @@ addTaskButton.addEventListener("click", () => {
 addTaskform.addEventListener("submit", addTask);
 
 function addTask(event) {
+    const taskTitle = document.querySelector("#taskTitle").value;
+    const taskDescription = document.querySelector("#taskDescription").value;
+    const taskDueDate = document.querySelector("#taskDueDate").value;
+    const taskPriority = document.querySelector("#taskPriority").value;
+    const taskProject = document.querySelector("#taskProject").value;
+    const taskId = Math.floor(Math.random() * 100000000);
     event.preventDefault();
     tasks.push(
         new Task(
@@ -67,7 +63,7 @@ function displayTasks() {
             </div>
             <div class="taskCardActions">
                 <button class="taskCardEditButton" id="${task.id}">Edit</button>
-                <button class="taskCardDeleteButton" id="${task.id}" >Delete</button>
+                    <button class="taskCardDeleteButton" id="${task.id}" >Delete</button>
             </div>  
         `;
         if (tasksContainer) {
@@ -135,17 +131,13 @@ function displayTasks() {
     });
 }
 
-// RETRIEVE THE STORED TASKS
-let tasks = [];
-let projects = [];
-
 function addProject(event) {
     event.preventDefault();
     const project = document.querySelector("#addProjectTitle").value;
     projects.push(new Project(project));
     localStorage.setItem("projects", JSON.stringify(projects));
-    console.log(project);
     displayProjects();
+    console.log(projects);
 }
 
 function displayProjects() {
@@ -157,6 +149,7 @@ function displayProjects() {
         projectButton.classList.add("projectButton");
         projectButton.innerHTML = `
             <span>${project.project}</span>
+
         `;
         if (projectsContainer) {
             projectsContainer.appendChild(projectButton);
@@ -164,15 +157,18 @@ function displayProjects() {
     });
 }
 
-const addProjectButton = document.querySelector("#addProjectButton");
-
-addProjectButton.addEventListener("click", addProject);
+const addProjectForm = document.querySelector("#addProjectForm");
+addProjectForm.addEventListener("submit", addProject);
 
 window.addEventListener("load", () => {
     const tasksFromLocalStorage = localStorage.getItem("tasks");
+    const projectsFromLocalStorage = localStorage.getItem("projects");
     if (tasksFromLocalStorage) {
         tasks = JSON.parse(tasksFromLocalStorage);
         displayTasks();
+    } else if (projectsFromLocalStorage) {
+        projects = JSON.parse(projectsFromLocalStorage);
+        displayProjects();
     }
 });
 
@@ -184,6 +180,13 @@ window.addEventListener("click", (event) => {
     }
 });
 
+// STORE THE TASKS
+let tasks = [];
+
+// STORE THE PROJECTS
+let projects = [];
+
+// TASK CLASS
 class Task {
     constructor(title, description, date, priority, project, id) {
         this.title = title;
@@ -194,6 +197,8 @@ class Task {
         this.id = id;
     }
 }
+
+// PROJECT CLASS
 class Project {
     constructor(project) {
         this.project = project;
