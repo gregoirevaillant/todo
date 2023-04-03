@@ -1,11 +1,24 @@
-// SELECT THE INTERACTIVE ELEMENTS
 const addTaskform = document.querySelector("#addTaskForm");
 const addTaskButton = document.querySelector("#addTaskButton");
-
-// SELECT THE MODAL ELEMENTS
 const addTaskModal = document.querySelector("#addTaskModal");
+const editTaskModal = document.querySelector("#editTaskModal");
 
-// ADD EVENT LISTENERS
+const taskTitle = document.querySelector("#addTaskTitle").value;
+const taskDescription = document.querySelector("#addTaskDescription").value;
+const taskDueDate = document.querySelector("#addTaskDueDate").value;
+const taskPriority = document.querySelector("#addTaskPriority").value;
+const taskProject = document.querySelector("#addTaskProject").value;
+const taskId = Math.floor(Math.random() * 100000000);
+
+const tasksContainer = document.querySelector("#tasksContainer");
+const taskCards = document.querySelectorAll(".taskCard");
+
+let deleteButtons = document.querySelectorAll(".taskCardDeleteButton");
+let editButtons = document.querySelectorAll(".taskCardEditButton");
+
+const projectsContainer = document.querySelector("#projectsContainer");
+const projectButtons = document.querySelectorAll(".projectButton");
+
 addTaskButton.addEventListener("click", () => {
     addTaskModal.style.display = "flex";
 });
@@ -14,18 +27,22 @@ addTaskform.addEventListener("submit", addTask);
 
 function addTask(event) {
     event.preventDefault();
-    const title = document.querySelector("#addTaskTitle").value;
-    const description = document.querySelector("#addTaskDescription").value;
-    const id = Math.floor(Math.random() * 100000000);
-    tasks.push(new Task(title, description, id));
+    tasks.push(
+        new Task(
+            taskTitle,
+            taskDescription,
+            taskDueDate,
+            taskPriority,
+            taskProject,
+            taskId
+        )
+    );
     localStorage.setItem("tasks", JSON.stringify(tasks));
     addTaskModal.style.display = "none";
     displayTasks();
 }
 
 function displayTasks() {
-    const tasksContainer = document.querySelector("#tasksContainer");
-    const taskCards = document.querySelectorAll(".taskCard");
     taskCards.forEach((taskCard) => {
         taskCard.remove();
     });
@@ -39,6 +56,15 @@ function displayTasks() {
             <div class="taskCardDescription">
                 <p>${task.description}</p>
             </div>
+            <div class="taskCardDueDate">
+                <p><b>Due Date:</b> ${task.date}</p>
+            </div>
+            <div class="taskCardPriority">
+                <p><b>Priority:</b> ${task.priority}</p>
+            </div>
+            <div class="taskCardProject">
+                <p><b>Project:</b> ${task.project}</p>
+            </div>
             <div class="taskCardActions">
                 <button class="taskCardEditButton" id="${task.id}">Edit</button>
                 <button class="taskCardDeleteButton" id="${task.id}" >Delete</button>
@@ -47,8 +73,6 @@ function displayTasks() {
         if (tasksContainer) {
             tasksContainer.appendChild(taskCard);
         }
-        // DELETE THE TASKS
-        let deleteButtons = document.querySelectorAll(".taskCardDeleteButton");
         deleteButtons.forEach((deleteButton) => {
             deleteButton.addEventListener("click", (event) => {
                 const id = event.target.id;
@@ -61,8 +85,6 @@ function displayTasks() {
                 });
             });
         });
-        // EDIT THE TASKS
-        let editButtons = document.querySelectorAll(".taskCardEditButton");
         editButtons.forEach((editButton) => {
             editButton.addEventListener("click", (event) => {
                 const id = event.target.id;
@@ -73,26 +95,39 @@ function displayTasks() {
                 const editTaskDescription = document.querySelector(
                     "#editTaskDescription"
                 );
+                const editTaskDueDate =
+                    document.querySelector("#editTaskDueDate");
+                const editTaskPriority =
+                    document.querySelector("#editTaskPriority");
+                const editTaskProject =
+                    document.querySelector("#editTaskProject");
 
                 editTaskTitle.value = task.title;
                 editTaskDescription.value = task.description;
+                editTaskDueDate.value = task.date;
+                editTaskPriority.value = task.priority;
+                editTaskProject.value = task.project;
 
-                const editTaskModal = document.querySelector("#editTaskModal");
                 editTaskModal.style.display = "flex";
 
                 editTaskForm.addEventListener("submit", (event) => {
                     event.preventDefault();
                     const newTitle = editTaskTitle.value;
                     const newDescription = editTaskDescription.value;
-                    tasks[taskIndex] = new Task(newTitle, newDescription, id);
+                    const newDueDate = editTaskDueDate.value;
+                    const newPriority = editTaskPriority.value;
+                    const newProject = editTaskProject.value;
+
+                    tasks[taskIndex] = new Task(
+                        newTitle,
+                        newDescription,
+                        newDueDate,
+                        newPriority,
+                        newProject,
+                        id
+                    );
                     localStorage.setItem("tasks", JSON.stringify(tasks));
                     displayTasks();
-                    editTaskModal.style.display = "none";
-                });
-
-                const editTaskModalCloseButton =
-                    document.querySelector(".close");
-                editTaskModalCloseButton.addEventListener("click", () => {
                     editTaskModal.style.display = "none";
                 });
             });
@@ -102,8 +137,37 @@ function displayTasks() {
 
 // RETRIEVE THE STORED TASKS
 let tasks = [];
+let projects = [];
 
-// LOAD THE TASKS FROM LOCAL STORAGE ON PAGE LOAD
+function addProject(event) {
+    event.preventDefault();
+    const project = document.querySelector("#addProjectTitle").value;
+    projects.push(new Project(project));
+    localStorage.setItem("projects", JSON.stringify(projects));
+    console.log(project);
+    displayProjects();
+}
+
+function displayProjects() {
+    projectButtons.forEach((projectButton) => {
+        projectButton.remove();
+    });
+    projects.forEach((project) => {
+        const projectButton = document.createElement("button");
+        projectButton.classList.add("projectButton");
+        projectButton.innerHTML = `
+            <span>${project.project}</span>
+        `;
+        if (projectsContainer) {
+            projectsContainer.appendChild(projectButton);
+        }
+    });
+}
+
+const addProjectButton = document.querySelector("#addProjectButton");
+
+addProjectButton.addEventListener("click", addProject);
+
 window.addEventListener("load", () => {
     const tasksFromLocalStorage = localStorage.getItem("tasks");
     if (tasksFromLocalStorage) {
@@ -112,11 +176,26 @@ window.addEventListener("load", () => {
     }
 });
 
-// CREATE A TASK CLASS
+window.addEventListener("click", (event) => {
+    if (event.target == addTaskModal) {
+        addTaskModal.style.display = "none";
+    } else if (event.target == editTaskModal) {
+        editTaskModal.style.display = "none";
+    }
+});
+
 class Task {
-    constructor(title, description, id) {
+    constructor(title, description, date, priority, project, id) {
         this.title = title;
         this.description = description;
+        this.date = date;
+        this.priority = priority;
+        this.project = project;
         this.id = id;
+    }
+}
+class Project {
+    constructor(project) {
+        this.project = project;
     }
 }
