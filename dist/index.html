@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Todo - Grégoire</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <div id="app">
+            <header>
+                <h1>Project: Todo List</h1>
+                <button id="addTaskButton">Add task</button>
+            </header>
+            <div id="settingsContainer"></div>
+            <div id="addProjectContainer">
+                <form action="" id="addProjectForm">
+                    <label for="addProjectTitle">Title</label>
+                    <input type="text" id="addProjectTitle" />
+                    <button id="addProjectButton">Add project</button>
+                </form>
+            </div>
+            <div id="tasksContainer"></div>
+            <div id="addTaskModal">
+                <div class="modal-content">
+                    <form action="" id="addTaskForm">
+                        <label for="addTaskTitle">Title</label>
+                        <input type="text" id="addTaskTitle" />
+                        <label for="addTaskDescription">Description</label>
+                        <input type="text" id="addTaskDescription" />
+                        <button id="addTaskButton">Add task</button>
+                    </form>
+                </div>
+            </div>
+            <div id="editTaskModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form id="editTaskForm">
+                        <label for="editTaskTitle">Title:</label>
+                        <input type="text" id="editTaskTitle" name="title" />
+                        <label for="editTaskDescription">Description:</label>
+                        <input
+                            type="text"
+                            id="editTaskDescription"
+                            name="description" />
+                        <input type="submit" value="Save Changes" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="./main.js"></script>
+    </body>
+</html>
